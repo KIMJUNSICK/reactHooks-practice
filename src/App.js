@@ -1,16 +1,14 @@
 import React, { useState } from "react";
+import UseInput from "./UseInput";
 
 const App = () => {
-  const [item, setItem] = useState(0);
-  const IncrementItem = () => setItem(item + 1);
-  const decrementItem = () => setItem(item - 1);
+  const notAt = value => !value.includes("@");
+
+  const name = UseInput("Mr.", notAt);
   return (
     <div className="App">
-      <h1>Hello ReactHooks! </h1>
-      <h2>{item}</h2>
-      <br />
-      <button onClick={IncrementItem}>Increment</button>
-      <button onClick={decrementItem}>Decrement</button>
+      <h1>Hello ReactHooks!</h1>
+      <input placeholder="name!" {...name} />
     </div>
   );
 };
