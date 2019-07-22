@@ -1,54 +1,31 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useRef, useEffect, createRef } from "react";
+import ReactDOM from "react-dom";
 
-const useInput = defaultValue => {
-  const [value, setValue] = useState(defaultValue);
-
-  const onChange = e => {
-    const {
-      target: { value }
-    } = e;
-    setValue(value);
-  };
-  return { value, onChange };
-};
-
-const useFetch = url => {
-  const [payload, setPayload] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  const callUrl = async () => {
-    try {
-      const { data } = await axios.get(url);
-      setPayload(data);
-    } catch {
-      setError("Error!");
-    } finally {
-      setLoading(false);
+const clickOutside = ftn => {
+  const ref = createRef();
+  const handleClick = e => {
+    if (!ref.current.contains(e.target)) {
+      ftn();
     }
   };
-
   useEffect(() => {
-    callUrl();
+    document.addEventListener("click", handleClick);
   }, []);
-
-  return { payload, loading, error };
+  return ref;
 };
 
 const App = () => {
-  const name = useInput("");
-  const { payload, loading, error } = useFetch("https://aws.random.cat/meow");
-  console.log(name);
+  const onClickOutside = () => {
+    console.log("Out!");
+  };
+  const ref = clickOutside(onClickOutside);
   return (
     <div className="App">
-      <h1>Use Hooks!</h1>
-      <br />
-      <input {...name} placeholder="What's your name?" />
-      <br />
-      {loading && <span>loading your cat!</span>}
-      {!loading && error && <span>{error}</span>}
-      {!loading && payload && <img src={payload.file} width="250" />}
+      <div ref={ref}>
+        <h1>Hello Nicolas</h1>
+        <h2>This should be a popup</h2>
+      </div>
+      <input type="text" />
     </div>
   );
 };
