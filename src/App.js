@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import UseInput from "./UseInput";
+import React from "react";
+import { sections, UseTabs } from "./UseTabs";
 
 const App = () => {
-  const notAt = value => !value.includes("@");
-
-  const name = UseInput("Mr.", notAt);
+  const { currentItem, changeItem } = UseTabs(1, sections);
   return (
     <div className="App">
-      <h1>Hello ReactHooks!</h1>
-      <input placeholder="name!" {...name} />
+      {sections.map((section, index) => (
+        <button
+          onClick={() => {
+            changeItem(index);
+          }}
+        >
+          {section.tab}
+        </button>
+      ))}
+      <div>{currentItem.content}</div>
     </div>
   );
 };
