@@ -1,20 +1,15 @@
-import React from "react";
-import { sections, UseTabs } from "./UseTabs";
+import React, { useState, useEffect } from "react";
 
 const App = () => {
-  const { currentItem, changeItem } = UseTabs(1, sections);
+  const sayHello = () => console.log("hello");
+  const [number, setNumber] = useState(0);
+  const [aNumber, setANumber] = useState(0);
+  useEffect(sayHello, [number]);
   return (
     <div className="App">
-      {sections.map((section, index) => (
-        <button
-          onClick={() => {
-            changeItem(index);
-          }}
-        >
-          {section.tab}
-        </button>
-      ))}
-      <div>{currentItem.content}</div>
+      <div>Hi</div>
+      <button onClick={() => setNumber(number + 1)}>{number}</button>
+      <button onClick={() => setANumber(aNumber + 1)}>{aNumber}</button>
     </div>
   );
 };
