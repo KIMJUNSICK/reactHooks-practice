@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from "react";
-import useTitle from "./useTitle";
+import React, { useRef, useState, useEffect } from "react";
 
 const App = () => {
-  const titleUpater = useTitle("Loding...");
-  setTimeout(() => {
-    titleUpater("JS's world");
-  }, 5000);
-
+  const potato = useRef();
+  setTimeout(() => potato.current.focus(), 5000);
   return (
     <div className="App">
       <div>Hello, it's Me</div>
+      <input ref={potato} placeholder="lala" />
     </div>
   );
 };
